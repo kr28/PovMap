@@ -1,0 +1,31 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Heteroskedasticity model}
+\author{}
+\date{Dec 2012}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\noindent I suddenly realized this might be a solution to estimating the heteroskedasticity model. We (I) have always justified the heteroskedasticity model by saying that it represents parameter heterogeneity. Consider the random coefficient model for observation $i$
+\[
+y_i=x_i\beta_i+\varepsilon_i=x_i\beta+u_i=x_i\beta + x_i\lambda_i + \varepsilon_i,
+\]
+where $\beta_i=\beta+\lambda_i$ and $\lambda_i$ has zero mean and variance matrix $\Lambda$. This model can be estimated using standard software (e.g. the NLME library in R). Assuming homoskedasticity for $\varepsilon$, the residual $u_i$ is heteroskedastic with variance
+\[
+\sigma^2_u=\sigma^2_\varepsilon+\sum_{k,\ell} x_k x_\ell \Lambda_{k\ell}.
+\]
+So the random coefficient model gives us directly a model for heteroskedasticity! No further need for a GLS step. Model selection for the $\alpha$-model is now reduced to deciding which coefficients are likely to be random. We only need to put a cap on the imputed $\sigma^2_u$, e.g. by applying a sigmoid that has around 90\% of observations in the `linear' part. We could even use the 1.05 rule again.\\[1cm]
+Chris  
+
+
+\end{document}  

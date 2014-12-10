@@ -1,0 +1,40 @@
+\documentclass{article}
+\begin{document}
+\noindent We have, by Bayes' law:
+\[
+p(v_a | e_{a.}) = \frac{p(e_{a.} | v_a) p(v_a)}{p(e_{a.})}.
+\]
+Since $v_a$ is a normal mixture it has density (say) $ \sum_i p_i \varphi(v_a ; \mu_i, \tau_i)$ (where $\varphi(x; \mu, \sigma)$ indicates a normal density with mean $\mu$ and variance $\sigma^2$). Also, by the CLT we can assume that $\varepsilon_{a.}$ is normally distributed with mean zero and variance $\sigma^2_a$, say, so that $p(e_{a.} | v_a) = p(v_a+\varepsilon_{a.}|v_a) = \varphi(e_{a.}; v_a, \sigma_a)$. Hence we have
+\[
+p(v_a | e_{a.}) = \frac{\varphi(e_{a.} ; v_a, \sigma_a) \sum_i p_i \varphi(v_a; \mu_i, \tau_i)}{p(e_{a.})}.
+\]
+
+Suppressing unnecessary subscripts I first work out the typical product $\varphi(e ; v, \sigma) \varphi(v; \mu, \tau)$.
+
+Define $\rho^2 = (1/\sigma^2 + 1/\tau^2)^{-1}$, $\gamma = \tau^2 / (\sigma^2+\tau^2)$, and $\lambda=\gamma e + (1-\gamma) \mu$. Then
+\[
+\varphi(e ; v, \sigma) \varphi(v; \mu, \tau) = 
+\frac{1}{\sqrt{2\pi} \sqrt{\sigma^2+\tau^2}}{\rm exp}(-\frac{1}{2} \left(\frac{\gamma e^2 + (1-\gamma) \mu^2 - \lambda^2}{\rho^2} \right)) \varphi(v ; \lambda, \rho).
+\]
+(Roy: I am not giving you details to make sure that you work them out yourself. There could easily be typos in the formula, so please corroborate. This formula is based on completing the square and collecting all the constant parts in the factor preceding $\varphi(v; \lambda, \rho)$. The important thing is to get this factor right, since it depends on the area $a$ under consideration and the particular $v_a$ component $i$. So this factor is going to determine the ultimate weight given to component density $\varphi(v_a ; \lambda_{ai}, \rho_{ai}).$)
+
+With the above result we can now fully determine the normal mixture $p(v_a | e_{a.})$.
+Reintroducing the necessary subscripts, let
+$\rho_{ai}^2 = (1/\sigma_a^2 + 1/\tau_i^2)^{-1}$, $\gamma_{ai} = \tau_i^2 / (\sigma_a^2+\tau_i^2)$, and $\lambda_{ai}=\gamma_{ai} e_{a.} + (1-\gamma_{a.}) \mu_i$. Now define
+\[
+c_{ai}^* = p_i  \frac{1}{\sqrt{\sigma_a^2+\tau_i^2}}e^{-\frac{1}{2} \frac{\gamma_{ai} e_{a.}^2 + (1-\gamma_{ai}) \mu_i^2 - \lambda_{ai}^2}{\rho_{ai}^2} }
+\]
+and
+\[
+c_{ai} = \frac{c_{ai}^*}{\sum_i c_{aj}^*}.
+\]
+Then $p(v_a | e_{a.})$ is a normal mixture with component densities $\varphi(v_a ; \lambda_{ai}, \rho_{ai})$ and weights $c_{ai}$.
+
+Drawing from this distribution is an easy two-step procedure. Determine with probability $c_{ai}$ from which component distribution $i$ a random number will be drawn. Both steps are easy to implement.
+
+I hope this is clear.\\[1cm]
+\small Chris, August 8, 2012.
+\end{document}
+
+
+

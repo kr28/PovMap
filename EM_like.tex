@@ -1,0 +1,123 @@
+\documentclass[12pt, a4paper]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
+%\usepackage{oxford2}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+%%----------[Margin]--------------------------------
+\headheight=0in
+\headsep=0in
+\topmargin     =   0in
+\oddsidemargin =   0in    \evensidemargin =0in
+\setlength{\textwidth}{15.6cm}
+%\oddsidemargin =   14.6mm    \evensidemargin = 14.6mm
+%\setlength{\textwidth}{13cm}
+\setlength{\textheight}{23.5cm}
+%---------------------------------------------
+\usepackage{amssymb}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newcommand{\qed}{$\square$}
+
+%             this might be already defined
+\newenvironment{proof}{\vspace{1ex}\noindent{\bf Proof}\hspace{0.5em}}
+        {\hfill\qed\vspace{1ex}}
+
+\newenvironment{pfof}[1]{\vspace{1ex}\noindent{\bf Proof of #1}\hspace{0.5em}}
+        {\hfill\qed\vspace{1ex}}
+
+
+%\doublespacing
+\onehalfspacing
+
+\title{Is our pseudo-EM estimator consistent?}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{What we wish to prove}
+Both the ML and the conventional EM estimators are assumed to satisfy the following moment condition:
+\begin{equation}
+E[H(Y,Z)]=0,
+\end{equation}
+where we omitted the parameter vector of interest $\theta$ to reduce notation. By the law of iterated expactations, we have:
+\begin{equation}
+E_Y\left[E_Z[H(Y,Z)|Y]\right]=0.
+\end{equation}
+\vspace*{\baselineskip}
+
+\hrule
+\noindent{\tt Chris: Het is verwarrend om hier de $Y$ en de $Z$ onder de $E$ te hangen. Voor alle duidelijkheid:
+\[
+E [ H(Y,Z) | Y] = \int_{\tt z-domein} H(Y,z) p(z|Y) dz
+\]
+Ik neem aan dat dat is wat je bedoelt. 
+}
+\hrule\vspace*{\baselineskip}
+
+Our pseudo-EM estimator works with a slightly different moment condition. Consistency of this estimator requires that:
+\begin{equation}
+E_Y\left[E_Z[H(Y,Z)|g(Y)]\right]=0,
+\end{equation}
+where for now we are allowing for rather general functions $g(Y)$. 
+
+\vspace*{\baselineskip}
+\hrule\noindent{\tt Chris: Hier wordt de notatie echt verwarrend. Onder de gemaakte veronderstellingen geldt gewoon
+\[
+E [ E [ H(Y,Z) | g(Y)]] = E H(Y,Z) = 0.
+\]
+En in plaats van $g(Y)$ had er van alles kunnen staan. Dit is het punt wat ik al eerder noemde: onze momentconditie voor $\theta$ kun je niet schrijven als een voorwaardelijke verwachting. Als integraal uitgeschreven wordt die conditie
+\[
+\int_{\tt z-domein} H(Y,z) p(z|g(Y)) dz
+\]
+terwijl $E [ H(Y,Z) | g(Y)]$ gelijk is aan
+\[
+E [ H(Y,Z) | g(Y)] = \int_{\tt (z,y)-domein} H(y,z) p(y,z | g(y)=g(Y)) dy dz.
+\]
+
+Je voorbeeld klopt wel, dus de notatie was in ieder geval niet verwarrend voor jou...
+}
+\hrule\vspace*{\baselineskip}
+
+Thus, what we wish to establish is the following:
+\begin{conjecture}
+Assume $E[H(Y,Z)]=0$, and define $T(Y)=E_Z[H(Y,Z)|g(Y)]$. Then, what conditions do we have to impose on the function $g(Y)$ for the following moment condition to hold?
+\begin{equation}
+E_Y\left[T(Y)\right]=0.
+\label{eq:ET}
+\end{equation}
+\end{conjecture}
+
+By applying the function $g(Y)$ we stand to lose some of the information contained in the original vector $Y$. One extreme case is where no information is lost. $g(Y)$ would then have to be an invertible function, in which case eq.~(\ref{eq:ET}) is seen to hold true. The other extreme is where all information is lost by applying $g$. Below we will sketch an example where this might lead to a violation of eq.~(\ref{eq:ET}).
+\begin{example}
+Suppose $H(Y,Z)=YZ-1$, where $Z=Y+U$, with $E[Z]=E[Y]=E[U]=0$, $E[YU]=0$, and $E[Y^2]=1$. It then follows that: $E[H(Y,Z)]=E_Y[E_Z[YZ-1|Y]]=E_Y[Y^2-1]=0$. However, if we drop the conditioning on $Y$ from the inner expectation operator (which amounts to applying a function $g(Y)$ where all information is lost), we get: $E_Y[E_Z[YZ-1]]=E_Y[Y*0-1]=-1$.
+\end{example}
+An example where not all information is lost, but where eq.~(\ref{eq:ET}) is still violated, is where $g(Y)=Y^2$ and $H(Y,Z)=Z$, with $Z=Y$, $E[H(Y,Z)]=E[Y]=0$, and $Prob[Y>0]=\lambda >\frac{1}{2}$. In that case, we have: $E_Z[Z|Y^2]=(2\lambda-1)|Y| >0$.
+
+
+\end{document}

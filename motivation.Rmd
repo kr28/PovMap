@@ -1,0 +1,48 @@
+#Bias
+
+We consider estimating headcount poverty using the following model:
+
+$$y_h = \mu_h+\varepsilon_h,$$
+
+where $h$ are individuals from a population, $\mu_h$ are known and $\varepsilon_h$ are unknown. The $y_h$ are log expenditure. The $\varepsilon_h$ are modeled as independent draws from a zero mean probability distribution with finite second moment. We will assume homoskedasticity and by scaling the other variables lose no generatlity by setting the variance of $\varepsilon$ to unity. The typical case is to model $\varepsilon$ as draws from a (standard) normal distribution. If the (log) poverty line is $z$ than the probability of being poor is $\Phi(z-\mu_h)$, where $\Phi$ denotes the standard normal cumulative distribution function.
+
+How harmful is the assumption of normally distributed $\varepsilon_h$? Denote by $F$ the true distribution of $\varepsilon_h$, then the expected headcount (conditional on the $\mu_h$) in an area $a$ comprising $N$ households would be
+
+$$H=\frac{1}{N} \sum_h F(z-\mu_h),$$
+
+so the error made by a normal model for $F$ is
+
+$$D=\frac{1}{N} \sum_h \Phi(z-\mu_h) - F(z-\mu_h).$$
+
+In the typical case most $\mu_h$ will be considerably greater than $z$ so the size of error $D$ depends on the left tails of $\Phi$ and $F$. If the left tail of $F$ is declining slower than $\sim \varepsilon^2$ for $\varepsilon \rightarrow -\infty$ than the normal model has a negative bias. Typically, in expenditure regressions the residuals have fat tails so that this is a real concern, especially in situations with rather low headcount rates of poverty.
+
+#Precision
+
+Bias is therefore a reason to deviate from the normal model. Let me now turn to the precision of poverty estimators using normal models. The data generation we assume is
+
+$$y_h = \mu_h + \eta + \varepsilon_h$$
+
+where $\eta$ denotes a location-effect on expenditure for the location where individual $h$ is living. We will again model this effect as a draw from a normal distribution function, with known variance $\sigma^2$. For simulation and numerical examples we will take $\mu_h$ (expected log expenditure) normally distributed with variance 1 and $\sigma^2=0.05$. This corresponds to expenditure regressions with an $R^2$ of almost 0.5 and a variance share of the location effect of 0.05. This corresponds to the typical findings in expenditure regressions based on living standards surveys from developing countries. We will further assume that we know $\mu_h$ for all 200 inhabitants of the area where $h$ lives. Also, for a random sample of 10 individuals we have observed $y(i), \mu(i)$. (However, the sample individuals cannot be retraced in the $\mu_h$ data.)
+
+**Note**: scaling log expenditure so that the variance of $\varepsilon+\eta$ is around unity and equal to the variance of $\mu_h$ amounts to taking original expenditure data to a power. Say the Gini coefficient of expenditure is 0.5, and half of the variation in expenditure is explained by expected log expenditure is around 0.5 and unexplained variation is also around 0.5. (The standard deviation of a lognormal distribution is around twice the associated Gini coefficient.) So scaling log expenditure so that the variance of $\epsilon$ is 1 amounts to squaring expenditure levels.
+
+##Estimating mean log expenditure
+
+Let us first look at estimating mean expenditure $\bar{y}$ in the area. Obviously the best estimator is the average $\bar{\mu}=m$. The error of this estimator is
+
+$$\bar{y} - \bar{\mu} = \eta + \bar{\varepsilon},$$
+
+so the error variance is $0.05+1/200 = 0.055$ of which 91% is due to the variance of the location effect $\eta$. If we knew $\eta$ we could improve the precision of the estimated mean: prediction intervals would be 3.3 times as small. The sample information $(y(i),\mu(i)$ can be used for this purpose. Under the normality assumptions it can be shown that 
+
+$$\hat{\eta} = E(\eta | y(1),...,y(10);\mu(1),...,\mu(10)) = \frac{\sigma^2}{\sigma^2 + 0.1}(\bar{y}=\bar{\mu}).$$
+
+This effectively reduces the variance of the estimator for $\bar{y}$ by around 40%: 
+
+$$\text{var}(\eta-\hat{\eta}) = \text{var}\left(0.1/(0.05+0.1)\eta - 0.05/(0.05+0.1)\bar{\varepsilon(i)}\right) = 4/9 0.05 + 1/90 = 0.033,$$
+
+a 40% reduction compared to the original variance which would reduce prediction intervals by 23%. In absolute terms the standard deviation of prediction error would be reduced from 0.235 ($\sqrt{0.055}$) to 0.182 ($\sqrt{0.033}$). Of course, this is still too much for a useful prediction of mean log expenditure: several areas will have to be combined in practice.
+
+##Estimating headcount poverty
+
+Estimated poverty status for individual $h$ now becomes $\Phi((z-\mu_h)/(1+\sigma^2))$. There are no simple formulas for the variance of the error or the influence of the location effect. Instead, we will draw 
+

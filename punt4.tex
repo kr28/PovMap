@@ -1,0 +1,30 @@
+\documentstyle{article}
+\begin{document}
+\noindent{}Hallo Roy,\\[1cm]
+Denk je niet dat Molina-Rao met dependance gewoon bedoelen dat de variantie schatters voor de diverse niveaus afhankelijk zijn? Neem het eenvoudigste geval (alleen area regressors):
+\begin{eqnarray*}
+y &=& \bar{y}+\hat{r}\\
+y &=& U\tilde{\lambda}+\hat{\varepsilon}.
+\end{eqnarray*}
+Er geldt dat 
+\[
+\hat{r} = U \tilde{\lambda} + \hat{\varepsilon}.
+\]
+Volgens de formules van Corrolary 3 (saenote versie 11) leidt dat tot afhanke\-lijk\-heid tussen de variantieschatters voor $v$ en $\varepsilon$:
+\[
+(N-tr(U'P_XU))\hat{\sigma}^2_v+(N-d)\hat{\sigma}^2_{\varepsilon} = \hat{r}'\hat{r}.
+\]
+
+Ik heb het idee dat het voor de normal mixtures die wij maken geen rol speelt, omdat we uiteindelijk niet vastleggen (in ieder geval niet als we de sigma's van de componenten ook vrijlaten) wat $\sigma^2_v$ is. Let $X$ denote regressor matrix and $U$ the area dummies. Then 
+\begin{eqnarray*}
+y &=& X \hat{\beta} + \hat{r}\\
+&=& X \hat{\beta} + U \tilde{\lambda} + \tilde{\varepsilon},
+\end{eqnarray*}
+where the tildas indicate a regression of $\hat{r}$ on $U$. So we also have $X'\tilde{\varepsilon}=0,U'\tilde{\varepsilon}=0$ and $X'U\tilde{\lambda}=0$. If we need to build (e.g. for simulation) $\hat{r}'\hat{r}$ from independent (or at least uncorrelated) components we can use that
+\[
+\hat{r}'\hat{r} = \tilde{\lambda}'U'U\tilde{\lambda} + \tilde{\varepsilon}'\tilde{\varepsilon}.
+\]
+Note that the distribution of $\tilde{\lambda}$ also only depends (conditionally on $X$ and $U$) on $\hat{\sigma}^2_{\varepsilon}$, so there is no problem in building $\hat{r}'\hat{r}$. Similarly, in the case of normal mixtures with free variance parameters we only fix the $\sigma^2_{\varepsilon}$, not the $\sigma^2_v$. (But I think that in the case of fixed $\sigma^2_v$ we do ignore dependence of $\hat{\sigma}^2_v$ and 
+$\hat{\sigma}^2_{\varepsilon}$. Perhaps we should just point out that the fixed-variance-normal mixture approach is temporary.\\[1cm]
+Chris
+\end{document} 
