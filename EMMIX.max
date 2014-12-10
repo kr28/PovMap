@@ -1,0 +1,47 @@
+       PARAMETER (MNIND=1000)
+C         maximum number of data points
+      PARAMETER (MNATT=10)
+C         maximum dimensionality of data points
+      PARAMETER (MAXNG=10)
+C         maximum number of groups
+      PARAMETER (MSTART=200)
+C         maximum number of initial starts to be displayed in the final list
+      PARAMETER (LIMZ=400000)
+C          maximum size of global array used for storage within Hierarchical
+C          section.
+      PARAMETER (MHIER=10)
+C         maximum number of hierarchical methods to be used  
+      PARAMETER (MKMEAN=500)
+C         maximum number of iterations used in K-means
+      PARAMETER (TAUTO=.000001)
+C         the default tolerance for the EM algorithm when investigating 
+C         initial starts
+      PARAMETER (MITAUT=500)
+C         the default maximum number of iterations when investigating
+C         initial starts
+      PARAMETER (TFINAL=.000001)
+C         the default tolerance for the EM algorithm when iterating 
+C         the final fit (The best initial fit found)
+      PARAMETER (MITFIN=500)
+C         the default maximum number of iterations when iterating 
+C         the final fit (The best initial fit found)
+      PARAMETER (MITER=1000)
+C         maximum number of iterations for the EM algorithm
+      PARAMETER (HIRFLG=1)
+C         flag to switch on (1) and off (0) hierachical methods
+C         switch off for extremely large data sets
+      PARAMETER (MAXREP=1000)
+C          maximum number of bootstrap replications
+      PARAMETER (NUMAX=300)
+C          maximum value Nu can take when fitting t-distributions 
+      PARAMETER (XLOWEM=1.0E-30)
+C          minimum value denisty of a point is before it is considered
+C          to be zero (also minimum value of the mixing proportion  
+      PARAMETER (DENMAX=175)
+C          maximum value of the A term in exp(-A) used when calculating
+C          the denisty of a point. Above this value exp(-A) is equated
+C          to zero. 
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+
+
